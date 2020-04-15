@@ -24,7 +24,7 @@ jobs:
     executor: content-executor
     steps:
       - run:
-          name: checkout repo
+          name: Checkout Repository
           command: |
             if [ "${CIRCLE_BRANCH}" == "" ]; then
                 git clone https://${GITHUB_TOKEN}@github.com/diogofgm/TA-ibm_secretserver
@@ -35,13 +35,13 @@ jobs:
           key: deps1-{{ .Branch }}-{{ checksum "TA-ibm_secretserver/src/TA-ibm_secretserver/default/app.conf" }}
       - run: *apt-install
       - run:
-          name: grab appinspect
+          name: Get Splunk AppInspect
           command: |
             curl -Ls https://download.splunk.com/misc/appinspect/splunk-appinspect-2.0.0.tar.gz -o appinspect-lastest.tar.gz 
             mkdir appinspect-latest
             tar -zxvf appinspect-lastest.tar.gz -C appinspect-latest --strip-components=1
       - run:
-          name: install appinspect
+          name: Install Splunk AppInspect
           command: |
             cd appinspect-latest
             rm -rf venv
@@ -51,7 +51,7 @@ jobs:
             source venv/bin/activate
             pip install .
       - run:
-          name: run appinspect
+          name: Run Splunk AppInspect
           command: |
             cd TA-ibm_secretserver/src
             tar -zcvf TA-ibm_secretserver.tar.gz TA-ibm_secretserver
@@ -62,15 +62,16 @@ jobs:
             pwd
             ls -ltr
             source venv/bin/activate
-            splunk-appinspect inspect ../TA-ibm_secretserver/TA-ibm_secretserver.tar.gz --included-tags=cloud
-      - save_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "TA-ibm_secretserver/src/TA-ibm_secretserver/default/app.conf" }}
-          paths:
-            - "venv"
-      - persist_to_workspace:
-          root: TA-ibm_secretserver/dist/
-          paths:
-              - TA-ibm_secretserver.tar.gz
+            splunk-appinspect inspect ../TA-ibm_secretserver/src/TA-ibm_secretserver.tar.gz --included-tags=cloud
+#      - save_cache:
+#          key: deps1-{{ .Branch }}-{{ checksum "TA-ibm_secretserver/src/TA-ibm_secretserver/default/app.conf" }}
+#          paths:
+#            - "venv"
+#      - persist_to_workspace:
+#          root: TA-ibm_secretserver/dist/
+#          paths:
+#              - TA-ibm_secretserver.tar.gz
+#
 #  publish-github-release:
 #    docker:
 #      - image: cibuilds/github:0.10
