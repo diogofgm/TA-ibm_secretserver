@@ -6,7 +6,7 @@ dependencies:
     - sudo rm -rf /var/cache/apt/archives && sudo ln -s ~/.apt-cache /var/cache/apt/archives && mkdir -p ~/.apt-cache/partial
 
 apt-run: &apt-install
-  name: install system packages
+  name: Install System Packages
   command: |
     sudo apt update -qq
     sudo apt install -y python-pip
@@ -35,13 +35,33 @@ jobs:
           key: deps1-{{ .Branch }}-{{ checksum "TA-ibm_secretserver/src/TA-ibm_secretserver/default/app.conf" }}
       - run: *apt-install
       - run:
-          name: Get Splunk AppInspect
+          name: Get Splunk Packaging Toolkit
           command: |
-            curl -Ls https://download.splunk.com/misc/appinspect/splunk-appinspect-2.0.0.tar.gz -o appinspect-lastest.tar.gz 
+            curl -Ls https://download.splunk.com/misc/packaging-toolkit/splunk-packaging-toolkit-1.0.0.tar.gz -o splunk-packaging-toolkit-latest.tar.gz
+            mkdir splunk-packaging-toolkit-latest
+            tar -zxvf splunk-packaging-toolkit-latest.tar.gz -C splunk-packaging-toolkit-latest --strip-components=1
+      - run:
+          name: Install Splunk Packaging Toolkit
+          command: |
+            cd splunk-packaging-toolkit-latest
+            sudo pip install --upgrade pip setuptools
+            sudo pip install virtualenv
+            virtualenv --clear slim
+            source slim/bin/activate
+            pip install semantic_version
+            pip install splunk-packaging-toolkit-latest.tar.gz
+      - run:
+          name: Run Splunk Packaging Toolkit
+          command: |
+            slim package TA-ibm_secretserver/src
+      - run:
+          name: Get Splunk AppInspect CLI
+          command: |
+            curl -Ls https://download.splunk.com/misc/appinspect/splunk-appinspect-latest.tar.gz -o appinspect-lastest.tar.gz 
             mkdir appinspect-latest
             tar -zxvf appinspect-lastest.tar.gz -C appinspect-latest --strip-components=1
       - run:
-          name: Install Splunk AppInspect
+          name: Install Splunk AppInspect CLI
           command: |
             cd appinspect-latest
             rm -rf venv
