@@ -91,7 +91,6 @@ jobs:
           root: TA-ibm_secretserver/dist/
           paths:
               - TA-ibm_secretserver.tar.gz
-
   publish-github-release:
     docker:
       - image: cibuilds/github:0.10
