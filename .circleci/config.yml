@@ -83,14 +83,14 @@ jobs:
             ls -ltr
             source venv/bin/activate
             splunk-appinspect inspect ../TA-ibm_secretserver/src/TA-ibm_secretserver.tar.gz --included-tags=cloud
-     - save_cache:
-         key: deps1-{{ .Branch }}-{{ checksum "TA-ibm_secretserver/src/TA-ibm_secretserver/default/app.conf" }}
-         paths:
-           - "venv"
-     - persist_to_workspace:
-         root: TA-ibm_secretserver/dist/
-         paths:
-             - TA-ibm_secretserver.tar.gz
+      - save_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "TA-ibm_secretserver/src/TA-ibm_secretserver/default/app.conf" }}
+          paths:
+            - "venv"
+      - persist_to_workspace:
+          root: TA-ibm_secretserver/dist/
+          paths:
+              - TA-ibm_secretserver.tar.gz
 
   publish-github-release:
     docker:
