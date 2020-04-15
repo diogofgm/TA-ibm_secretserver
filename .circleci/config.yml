@@ -82,8 +82,8 @@ jobs:
             pwd
             ls -ltr
             source venv/bin/activate
-            ../TA-ibm_secretserver/inspect.sh
-#            splunk-appinspect inspect ../TA-ibm_secretserver/src/TA-ibm_secretserver.tar.gz --mode test --included-tags=cloud
+#            ../TA-ibm_secretserver/inspect.sh
+            splunk-appinspect inspect ../TA-ibm_secretserver/src/TA-ibm_secretserver.tar.gz
       - save_cache:
           key: deps1-{{ .Branch }}-{{ checksum "TA-ibm_secretserver/src/TA-ibm_secretserver/default/app.conf" }}
           paths:
