@@ -34,26 +34,26 @@ jobs:
       - restore_cache:
           key: deps1-{{ .Branch }}-{{ checksum "TA-ibm_secretserver/src/TA-ibm_secretserver/default/app.conf" }}
       - run: *apt-install
-      - run:
-          name: Get Splunk Packaging Toolkit
-          command: |
-            curl -Ls https://download.splunk.com/misc/packaging-toolkit/splunk-packaging-toolkit-1.0.0.tar.gz -o splunk-packaging-toolkit-1.0.0.tar.gz
-            mkdir splunk-packaging-toolkit-1.0.0
-            tar -zxvf splunk-packaging-toolkit-1.0.0.tar.gz -C splunk-packaging-toolkit-1.0.0 --strip-components=1
-      - run:
-          name: Install Splunk Packaging Toolkit
-          command: |
-            cd splunk-packaging-toolkit-1.0.0
-            sudo pip install --upgrade pip setuptools
-            sudo pip install virtualenv
-            virtualenv --clear slim
-            source slim/bin/activate
-            pip install semantic_version
-            pip install splunk-packaging-toolkit-1.0.0.tar.gz
-      - run:
-          name: Run Splunk Packaging Toolkit
-          command: |
-            slim package TA-ibm_secretserver/src
+      # - run:
+      #     name: Get Splunk Packaging Toolkit
+      #     command: |
+      #       curl -Ls https://download.splunk.com/misc/packaging-toolkit/splunk-packaging-toolkit-1.0.0.tar.gz -o splunk-packaging-toolkit-1.0.0.tar.gz
+      #       mkdir splunk-packaging-toolkit-1.0.0
+      #       tar -zxvf splunk-packaging-toolkit-1.0.0.tar.gz -C splunk-packaging-toolkit-1.0.0 --strip-components=1
+      # - run:
+      #     name: Install Splunk Packaging Toolkit
+      #     command: |
+      #       cd splunk-packaging-toolkit-1.0.0
+      #       sudo pip install --upgrade pip setuptools
+      #       sudo pip install virtualenv
+      #       virtualenv --clear slim
+      #       source slim/bin/activate
+      #       pip install semantic_version
+      #       pip install splunk-packaging-toolkit-1.0.0.tar.gz
+      # - run:
+      #     name: Run Splunk Packaging Toolkit
+      #     command: |
+      #       slim package TA-ibm_secretserver/src
       - run:
           name: Get Splunk AppInspect CLI
           command: |
