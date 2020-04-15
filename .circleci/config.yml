@@ -37,19 +37,19 @@ jobs:
       - run:
           name: Get Splunk Packaging Toolkit
           command: |
-            curl -Ls https://download.splunk.com/misc/packaging-toolkit/splunk-packaging-toolkit-1.0.0.tar.gz -o splunk-packaging-toolkit-latest.tar.gz
-            mkdir splunk-packaging-toolkit-latest
-            tar -zxvf splunk-packaging-toolkit-latest.tar.gz -C splunk-packaging-toolkit-latest --strip-components=1
+            curl -Ls https://download.splunk.com/misc/packaging-toolkit/splunk-packaging-toolkit-1.0.0.tar.gz -o splunk-packaging-toolkit-1.0.0.tar.gz
+            mkdir splunk-packaging-toolkit-1.0.0
+            tar -zxvf splunk-packaging-toolkit-1.0.0.tar.gz -C splunk-packaging-toolkit-1.0.0 --strip-components=1
       - run:
           name: Install Splunk Packaging Toolkit
           command: |
-            cd splunk-packaging-toolkit-latest
+            cd splunk-packaging-toolkit-1.0.0
             sudo pip install --upgrade pip setuptools
             sudo pip install virtualenv
             virtualenv --clear slim
             source slim/bin/activate
             pip install semantic_version
-            pip install splunk-packaging-toolkit-latest.tar.gz
+            pip install splunk-packaging-toolkit-1.0.0.tar.gz
       - run:
           name: Run Splunk Packaging Toolkit
           command: |
