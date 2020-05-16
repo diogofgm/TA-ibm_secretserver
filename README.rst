@@ -2,7 +2,7 @@
 IBM SecretServer Add-on for Splunk
 ==================================
 
-|appinspect-status| |docs|
+|appinspect-status| |circleci-status| |docs|
 
 Documentation
 -------------
@@ -13,6 +13,11 @@ https://ta-ibm-secretserver.readthedocs.io/en/latest/
     :alt: build status
     :scale: 100%
     :target: https://splunkbase.splunk.com/app/4662/
+
+.. |circleci-status| image:: https://circleci.com/gh/diogofgm/TA-ibm_secretserver.svg?style=shield
+    :alt: circleci status
+    :scale: 100%
+    :target: https://circleci.com/gh/diogofgm/TA-ibm_secretserver
 
 .. |docs| image:: https://readthedocs.org/projects/ta-ibm-secretserver/badge/?version=latest
     :alt: documentation status
