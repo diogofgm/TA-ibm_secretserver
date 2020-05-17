@@ -16,7 +16,7 @@ version: 2.1
 executors:
   content-executor:
     docker:
-      - image: circleci/python:2.7.13
+      - image: circleci/python:3.7.7
     working_directory: ~/repo
 
 jobs:
@@ -27,33 +27,13 @@ jobs:
           name: Checkout Repository
           command: |
             if [ "${CIRCLE_BRANCH}" == "" ]; then
-                git clone https://${GITHUB_TOKEN}@github.com/diogofgm/TA-ibm_secretserver
+                git clone https://${GITHUB_TOKEN}@github.com/diogofgm/${CIRCLE_PROJECT_REPONAME}
             else
-                git clone --branch ${CIRCLE_BRANCH} https://${GITHUB_TOKEN}@github.com/diogofgm/TA-ibm_secretserver
+                git clone --branch ${CIRCLE_BRANCH} https://${GITHUB_TOKEN}@github.com/diogofgm/${CIRCLE_PROJECT_REPONAME}
             fi
       - restore_cache:
           key: deps1-{{ .Branch }}-{{ checksum "TA-ibm_secretserver/src/TA-ibm_secretserver/default/app.conf" }}
       - run: *apt-install
-      # - run:
-      #     name: Get Splunk Packaging Toolkit
-      #     command: |
-      #       curl -Ls https://download.splunk.com/misc/packaging-toolkit/splunk-packaging-toolkit-1.0.0.tar.gz -o splunk-packaging-toolkit-1.0.0.tar.gz
-      #       mkdir splunk-packaging-toolkit-1.0.0
-      #       tar -zxvf splunk-packaging-toolkit-1.0.0.tar.gz -C splunk-packaging-toolkit-1.0.0 --strip-components=1
-      # - run:
-      #     name: Install Splunk Packaging Toolkit
-      #     command: |
-      #       cd splunk-packaging-toolkit-1.0.0
-      #       sudo pip install --upgrade pip setuptools
-      #       sudo pip install virtualenv
-      #       virtualenv --clear slim
-      #       source slim/bin/activate
-      #       pip install semantic_version
-      #       pip install splunk-packaging-toolkit-1.0.0.tar.gz
-      # - run:
-      #     name: Run Splunk Packaging Toolkit
-      #     command: |
-      #       slim package TA-ibm_secretserver/src
       - run:
           name: Get Splunk AppInspect CLI
           command: |
@@ -73,16 +53,19 @@ jobs:
       - run:
           name: Run Splunk AppInspect
           command: |
-            cd TA-ibm_secretserver/src
-            tar -zcvf TA-ibm_secretserver.tar.gz TA-ibm_secretserver
+            cd ${CIRCLE_PROJECT_REPONAME}/src
+            tar -zcvf ${CIRCLE_PROJECT_REPONAME}.tar.gz ${CIRCLE_PROJECT_REPONAME}
             mkdir ../dist
-            cp TA-ibm_secretserver.tar.gz ../dist/
+            cp ${CIRCLE_PROJECT_REPONAME}.tar.gz ../dist/
             cd ../../
             cd appinspect-latest
             pwd
             ls -ltr
             source venv/bin/activate
-            splunk-appinspect inspect ../TA-ibm_secretserver/src/TA-ibm_secretserver.tar.gz
+            splunk-appinspect inspect ../${CIRCLE_PROJECT_REPONAME}/src/${CIRCLE_PROJECT_REPONAME}.tar.gz | tee appinspect.log
+            if grep -q FAILURE "appinspect.log"; then
+              exit 1
+            fi
       - save_cache:
           key: deps1-{{ .Branch }}-{{ checksum "TA-ibm_secretserver/src/TA-ibm_secretserver/default/app.conf" }}
           paths:
@@ -98,9 +81,32 @@ jobs:
       - attach_workspace:
           at: ~/TA-ibm_secretserver/dist/TA-ibm_secretserver.tar.gz
       - run:
-          name: publish release on github
+          name: Publish release on Github
           command: |
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${CIRCLE_TAG} ~/TA-ibm_secretserver/dist/TA-ibm_secretserver.tar.gz
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${CIRCLE_TAG} ~/${CIRCLE_PROJECT_REPONAME}/dist/${CIRCLE_PROJECT_REPONAME}.tar.gz
+  publish-splunkbase-release:
+    docker:
+      - image: cibuilds/github:0.10
+    steps:
+      - attach_workspace:
+          at: ~/TA-ibm_secretserver/dist/TA-ibm_secretserver.tar.gz
+      - run:
+          name: Login to Splunkbase
+          command: |
+            AUTH=$(curl --location --request POST 'https://splunkbase.splunk.com/api/account:login/' --data-urlencode 'username='"$SPLUNKBASE_USER"'' --data-urlencode 'password='"$SPLUNKBASE_PASSWORD"'')
+            echo "$AUTH" > login.xml
+            if [ "$AUTH" == "Credentials Invalid" ]; then
+              exit 1
+            else
+              exit 0
+            fi
+      - run:
+          name: Publish release on Splunkbase
+          command: |
+            SPLUNKBASE_SESSION_ID=$(awk '/id/{printf $1}' login.xml | cut -d">" -f2 | cut -d"<" -f1)
+            curl --location --request POST 'https://splunkbase.splunk.com/api/v1/app/'"${SPLUNKBASE_APP_ID}"'/new_release/' --header 'Authorization: Basic ZGlvZ29mZ206cHVmcFloLWd5cWZ1Ny13dW5oeWQ=' --header 'Cookie: sessionid='"$SPLUNKBASE_SESSION_ID"''; csrftoken=sMucg13V1Ul7v7JNlQLPzjr3fFbZFpHQmNwW4wvnFfJXrVXbvKUaG6lzCGPi48tM' --form 'files[]=@/'"${CIRCLE_PROJECT_REPONAME}"'/dist' --form 'filename='"${CIRCLE_PROJECT_REPONAME}"'.tgz' --form 'cim_versions=4.9,4.7' --form 'splunk_versions=8.0' --form 'visibility=true'
+            exit 1
+
 workflows:
   version: 2.1
   validate-and-build:
@@ -117,3 +123,13 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
+      - publish-splunkbase-release:
+          context: GitHub
+          requires:
+            - validate-content
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              only:
+                - master
