@@ -17,7 +17,7 @@ See `Questions related to IBM Secret Server Add-on for Splunk`_ on Splunk Answer
 
 
 
-.. _IBM Secret Server Add-on for Splunk: https://splunkbase.splunk.com/app/4662/
+.. _IBM Secret Server Add-on for Splunk: https://splunkbase.splunk.com/app/5029/
 .. _Release Notes for the IBM Secret Server Add-on for Splunk: https://ta-ibm-secretserver.readthedocs.io/en/latest/releasenotes.html
 .. _Installation and configuration overview for the IBM Secret Server Add-on for Splunk: https://ta-ibm-secretserver.readthedocs.io/en/latest/install.html
-.. _Questions related to IBM Secret Server Add-on for Splunk: http://answers.splunk.com/answers/app/4662
+.. _Questions related to IBM Secret Server Add-on for Splunk: http://answers.splunk.com/answers/app/5029

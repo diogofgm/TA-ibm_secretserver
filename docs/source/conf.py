@@ -19,14 +19,14 @@
 
 # -- Project information -----------------------------------------------------
 
-project = u'IBM DataPower Add-on for Splunk'
+project = u'IBM Secret Server Add-on for Splunk'
 copyright = u'2019, Diogo Silva'
 author = u'Diogo Silva'
 
 # The short X.Y version
-version = u'0.1'
+version = u'1.0'
 # The full version, including alpha/beta/rc tags
-release = u'0.1.1'
+release = u'1.0.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -103,7 +103,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'IBMDataPowerAdd-onforSplunkdoc'
+htmlhelp_basename = 'IBMSecretServerAdd-onforSplunkdoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -130,7 +130,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'IBMDataPowerAdd-onforSplunk.tex', u'IBM DataPower Add-on for Splunk Documentation',
+    (master_doc, 'IBMSecretServerAdd-onforSplunk.tex', u'IBM Secret Server Add-on for Splunk Documentation',
      u'Diogo Silva', 'manual'),
 ]
 
@@ -140,7 +140,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'ibmdatapoweradd-onforsplunk', u'IBM DataPower Add-on for Splunk Documentation',
+    (master_doc, 'ibmsecretserveradd-onforsplunk', u'IBM Secret Server Add-on for Splunk Documentation',
      [author], 1)
 ]
 
@@ -151,8 +151,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'IBMDataPowerAdd-onforSplunk', u'IBM DataPower Add-on for Splunk Documentation',
-     author, 'IBMDataPowerAdd-onforSplunk', 'One line description of project.',
+    (master_doc, 'IBMSecretServerAdd-onforSplunk', u'IBM Secret Server Add-on for Splunk Documentation',
+     author, 'IBMSecretServerAdd-onforSplunk', 'One line description of project.',
      'Miscellaneous'),
 ]
 
