@@ -4,8 +4,7 @@ Release notes
 
 About this release
 ------------------
-
-Version 1.0.0 of the IBM Secret Server Add-on for Splunk is compatible with the following software, CIM versions, and platforms.
+This version  of the IBM Secret Server Add-on for Splunk is compatible with the following software, CIM versions, and platforms.
 
 .. csv-table::
    :file: csv/releasenotes.csv
@@ -13,12 +12,12 @@ Version 1.0.0 of the IBM Secret Server Add-on for Splunk is compatible with the 
 
 New features
 ------------
-Version 1.0.0 of the IBM Secret Server Add-on for Splunk contains the following new features.
+This version of the IBM Secret Server Add-on for Splunk contains the following new features.
 
 
 Fixed issues
 ------------
-Version 1.0.0 of the IBM Secret Server Add-on for Splunk contains the following fixed issues.
+This version  of the IBM Secret Server Add-on for Splunk contains the following fixed issues.
 
 .. csv-table::
    :file: csv/fixedissues.csv
@@ -26,7 +25,7 @@ Version 1.0.0 of the IBM Secret Server Add-on for Splunk contains the following 
 
 Known issues
 ------------
-Version 1.0.0 of the IBM Secret Server Add-on for Splunk has the following known issues.
+This version of the IBM Secret Server Add-on for Splunk has the following known issues.
 
 .. csv-table::
    :file: csv/knownissues.csv
