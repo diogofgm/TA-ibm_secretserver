@@ -376,6 +376,7 @@ workflows:
       #       branches:
       #         only: /.*/
       - splunk-release/tag:
+          context: GitHub
           name: tag-alpha
           tag_level: alpha
           gh_user: ${GH_USER}
@@ -391,6 +392,7 @@ workflows:
             branches:
               only: develop
       - splunk-release/tag:
+          context: GitHub
           name: tag-beta
           tag_level: beta
           gh_user: ${GH_USER}
@@ -405,6 +407,7 @@ workflows:
             branches:
               only: develop
       - splunk-release/merge-to-master:
+          context: GitHub
           name: merge-beta-to-master
           gh_user: ${GH_USER}
           gh_token: ${GH_PAT}
@@ -414,6 +417,7 @@ workflows:
             branches:
               only: develop
       - splunk-release/tag:
+          context: GitHub
           name: tag-candidate
           tag_level: candidate
           gh_user: ${GH_USER}
@@ -426,6 +430,7 @@ workflows:
           requires:
             - tag-candidate
       - splunk-release/tag:
+          context: GitHub
           name: tag-final-major
           tag_level: final -s major
           gh_user: ${GH_USER}
@@ -437,6 +442,7 @@ workflows:
           requires:
             - tag-candidate
       - splunk-release/tag:
+          context: GitHub
           name: tag-final-minor
           tag_level: final -s minor
           gh_user: ${GH_USER}
@@ -448,6 +454,7 @@ workflows:
           requires:
             - tag-candidate
       - splunk-release/tag:
+          context: GitHub
           name: tag-final-patch
           tag_level: final -s patch
           gh_user: ${GH_USER}
@@ -473,6 +480,7 @@ workflows:
             tags:
               only: /^v\d*\.\d*\.\d*$/
       - publish-gh:
+          context: GitHub
           requires:
             - package
           filters:
@@ -482,6 +490,7 @@ workflows:
             tags:
               only: /^v\d*\.\d*\.\d*$/
       - publish-sbase:
+          context: GitHub
           requires:
             - package
           filters:
