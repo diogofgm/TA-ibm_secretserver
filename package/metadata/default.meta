@@ -1,3 +1,11 @@
+#
+# IBM SecretServer Add-on for Splunk 
+#
+# File:         default.meta
+#
+# Created:      2020-03-12
+# Last updated: 2020-08-21
+#
 
 # Application-level permissions
 
