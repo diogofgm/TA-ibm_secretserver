@@ -2,7 +2,7 @@
 IBM SecretServer Add-on for Splunk
 ==================================
 
-|appinspect-status| |circleci-status| |docs|
+|appinspect-status| |circleci-status| |docs| |liberapay|
 
 Documentation
 -------------
@@ -22,4 +22,9 @@ https://ta-ibm-secretserver.readthedocs.io/en/latest/
 .. |docs| image:: https://readthedocs.org/projects/ta-ibm-secretserver/badge/?version=latest
     :alt: documentation status
     :scale: 100%
-    :target: https://readthedocs.org/projects/ta-ibm-secretserver/?version=latest 
+    :target: https://readthedocs.org/projects/ta-ibm-secretserver/?version=latest
+
+.. |liberapay| image:: https://img.shields.io/liberapay/patrons/diogofgm.svg?logo=liberapay
+    :alt: liberapay
+    :scale: 100%
+    :target: https://liberapay.com/diogofgm/donate
