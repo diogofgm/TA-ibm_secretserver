@@ -85,9 +85,9 @@ jobs:
   publish-github-release:
     docker:
       - image: cibuilds/github:latest
-          auth:
-            username: $DOCKERHUB_LOGIN
-            password: $DOCKERHUB_TOKEN
+        auth:
+          username: $DOCKERHUB_LOGIN
+          password: $DOCKERHUB_TOKEN
     steps:
       - attach_workspace:
           at: ~/TA-ibm_secretserver/dist/TA-ibm_secretserver.tar.gz
@@ -99,9 +99,9 @@ jobs:
   publish-splunkbase-release:
     docker:
       - image: cibuilds/github:latest
-          auth:
-            username: $DOCKERHUB_LOGIN
-            password: $DOCKERHUB_TOKEN
+        auth:
+          username: $DOCKERHUB_LOGIN
+          password: $DOCKERHUB_TOKEN
     steps:
       - attach_workspace:
           at: ~/TA-ibm_secretserver/dist/TA-ibm_secretserver.tar.gz
