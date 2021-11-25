@@ -77,7 +77,7 @@ jobs:
           paths:
             - "venv"
       - persist_to_workspace:
-          root: TA-ibm_secretserver/dist/
+          root: dist/
           paths:
               - TA-ibm_secretserver.tar.gz
       - store_test_results:
