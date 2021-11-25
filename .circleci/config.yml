@@ -62,6 +62,7 @@ jobs:
             mkdir ../dist
             cp ${CIRCLE_PROJECT_REPONAME}.tar.gz ../dist/
             cd ../../
+            ls -ltr
             cd appinspect-latest
             pwd
             ls -ltr
