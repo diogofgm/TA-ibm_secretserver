@@ -63,7 +63,6 @@ jobs:
             cp ${CIRCLE_PROJECT_REPONAME}.tar.gz ../dist/
             cd ../
             ls -ltr
-            ls repo
             cd appinspect-latest
             pwd
             ls -ltr
