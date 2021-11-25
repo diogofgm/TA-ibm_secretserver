@@ -68,7 +68,7 @@ jobs:
             ls -ltr
             source venv/bin/activate
             mkdir ../test-results
-            splunk-appinspect inspect --mode precert --data-format junitxml --output-file ../test-results/results.xml ../${CIRCLE_PROJECT_REPONAME}/src/${CIRCLE_PROJECT_REPONAME}.tar.gz  | tee appinspect.log
+            splunk-appinspect inspect --mode precert --data-format junitxml --output-file ../test-results/results.xml ../dist/${CIRCLE_PROJECT_REPONAME}.tar.gz  | tee appinspect.log
             if grep -q FAILURE "appinspect.log"; then
               exit 1
             fi
