@@ -5,7 +5,7 @@ orbs:
     executors:
       python27:
         docker:
-          - image: circleci/python:2.7
+          - image: circleci/python
     commands:
       package:
         steps:
