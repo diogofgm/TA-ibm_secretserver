@@ -111,6 +111,7 @@ jobs:
           command: |
             AUTH=$(curl --location --request POST 'https://splunkbase.splunk.com/api/account:login/' --data-urlencode 'username='"$SPLUNKBASE_USER"'' --data-urlencode 'password='"$SPLUNKBASE_PASSWORD"'')
             echo "$AUTH" > login.xml
+            cat login.xml
             if [ "$AUTH" == "Credentials Invalid" ]; then
               exit 1
             else
