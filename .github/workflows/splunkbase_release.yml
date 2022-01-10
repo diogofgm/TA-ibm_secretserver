@@ -62,10 +62,11 @@ jobs:
           else
             exit 0
           fi
+          cat login.xml
       - name: Publish to Splunkbase
         run: |
           SPLUNKBASE_SESSION_ID=$(awk '/id/{printf $1}' login.xml | cut -d">" -f2 | cut -d"<" -f1)
-          curl --location --request POST 'https://splunkbase.splunk.com/api/v1/app/'"${SPLUNKBASE_ID}"'/new_release/' --header 'Authorization: Basic ZGlvZ29mZ206cHVmcFloLWd5cWZ1Ny13dW5oeWQ=' --header 'Cookie: sessionid='"$SPLUNKBASE_SESSION_ID"''; csrftoken=sMucg13V1Ul7v7JNlQLPzjr3fFbZFpHQmNwW4wvnFfJXrVXbvKUaG6lzCGPi48tM' --form 'files[]=@/home/runner/work/TA-ibm_secretserver/TA-ibm_secretserver/dist' --form 'filename=TA-ibm_secretserver.tgz' --form 'cim_versions='"${SPLUNKBASE_SPLUNK_CIM_VERSION}"' --form 'splunk_versions='"${SPLUNKBASE_SPLUNK_VERSION}"' --form 'visibility=true'
+          curl --location --request POST 'https://splunkbase.splunk.com/api/v1/app/'"${SPLUNKBASE_ID}"'/new_release/' --header 'Authorization: Basic ZGlvZ29mZ206cHVmcFloLWd5cWZ1Ny13dW5oeWQ=' --header 'Cookie: sessionid='"$SPLUNKBASE_SESSION_ID"''; csrftoken=sMucg13V1Ul7v7JNlQLPzjr3fFbZFpHQmNwW4wvnFfJXrVXbvKUaG6lzCGPi48tM' --form 'files[]=@/home/runner/work/TA-ibm_secretserver/TA-ibm_secretserver/dist' --form 'filename=TA-ibm_secretserver.tgz' --form 'cim_versions='"${SPLUNKBASE_SPLUNK_CIM_VERSION}"'' --form 'splunk_versions='"${SPLUNKBASE_SPLUNK_VERSION}"'' --form 'visibility=true'
           exit 1
         
       
