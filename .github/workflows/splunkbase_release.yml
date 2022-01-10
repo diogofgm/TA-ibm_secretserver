@@ -55,13 +55,14 @@ jobs:
           pwd
 
       - name: Authenticate to Splunkbase
+        id: login
         run: |
           curl --location --request POST 'https://splunkbase.splunk.com/api/account:login/' --data-urlencode 'username='"${{ secrets.SPLUNKBASE_USER }}"'' --data-urlencode 'password='"${{ secrets.SPLUNKBASE_PASSWORD }}"'' > login.xml
-
+          echo ::set-output name=SPLUNKBASE_SESSION_ID::"awk '/id/{printf $1}' login.xml | cut -d">" -f2 | cut -d"<" -f1)"
+          
       - name: Publish to Splunkbase
         run: |
-          SPLUNKBASE_SESSION_ID=$(awk '/id/{printf $1}' login.xml | cut -d">" -f2 | cut -d"<" -f1)
-          echo $SPLUNKBASE_SESSION_ID
+          echo ${{ steps.login.outputs.SPLUNKBASE_SESSION_ID }}
           echo ${{ steps.vars.outputs.SPLUNKBASE_ID }}
           echo ${{ steps.vars.outputs.SPLUNKBASE_SPLUNK_VERSION }}
           echo ${{ steps.vars.outputs.SPLUNKBASE_SPLUNK_CIM_VERSION }}
