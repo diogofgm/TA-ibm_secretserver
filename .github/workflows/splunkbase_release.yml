@@ -38,9 +38,9 @@ jobs:
         id: vars
         run: |
           source .splunkbase
-          echo ::set-output name=SPLUNKBASE_ID::"echo $SPLUNKBASE_ID"
-          echo ::set-output name=SPLUNKBASE_SPLUNK_VERSION::"echo $SPLUNKBASE_SPLUNK_VERSION"
-          echo ::set-output name=SPLUNKBASE_SPLUNK_CIM_VERSION::"echo $SPLUNKBASE_SPLUNK_CIM_VERSION"
+          echo ::set-output name=SPLUNKBASE_ID::"$SPLUNKBASE_ID"
+          echo ::set-output name=SPLUNKBASE_SPLUNK_VERSION::"$SPLUNKBASE_SPLUNK_VERSION"
+          echo ::set-output name=SPLUNKBASE_SPLUNK_CIM_VERSION::"$SPLUNKBASE_SPLUNK_CIM_VERSION"
 
       - name: Package Splunk App with CLI
         run: |
@@ -62,7 +62,7 @@ jobs:
           ls
           pwd
           AUTH=$(awk '/id/{printf $1}' login.xml | cut -d'>' -f2 | cut -d'<' -f1)
-          echo ::set-output name=SPLUNKBASE_SESSION_ID::"echo $AUTH"
+          echo ::set-output name=SPLUNKBASE_SESSION_ID::"$AUTH"
           
       - name: Publish to Splunkbase
         run: |
