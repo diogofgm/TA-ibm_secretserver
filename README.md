@@ -5,7 +5,6 @@
 [![docs](https://readthedocs.org/projects/ta-ibm-secretserver/badge/?version=latest)](https://readthedocs.org/projects/ta-ibm-secretserver/badge/?version=latest)
 [![liberapay](https://img.shields.io/liberapay/patrons/diogofgm.svg?logo=liberapay)](https://liberapay.com/diogofgm/donate)
 
-|appinspect-status| |circleci-status| |docs| |liberapay|
 
 ## Documentation
 Documentation can be found at:
