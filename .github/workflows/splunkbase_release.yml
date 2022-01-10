@@ -70,7 +70,7 @@ jobs:
           echo ${{ steps.vars.outputs.SPLUNKBASE_ID }}
           echo ${{ steps.vars.outputs.SPLUNKBASE_SPLUNK_VERSION }}
           echo ${{ steps.vars.outputs.SPLUNKBASE_SPLUNK_CIM_VERSION }}
-          curl --location --request POST 'https://splunkbase.splunk.com/api/v1/app/'"${{ steps.vars.outputs.SPLUNKBASE_ID }}"'/new_release/' --header 'Authorization: Basic ZGlvZ29mZ206cHVmcFloLWd5cWZ1Ny13dW5oeWQ=' --header 'Cookie: sessionid='"$SPLUNKBASE_SESSION_ID"''; csrftoken=sMucg13V1Ul7v7JNlQLPzjr3fFbZFpHQmNwW4wvnFfJXrVXbvKUaG6lzCGPi48tM' --form 'files[]=@/home/runner/work/TA-ibm_secretserver/TA-ibm_secretserver/dist' --form 'filename=TA-ibm_secretserver.tgz' --form 'cim_versions='"${{ steps.vars.outputs.SPLUNKBASE_SPLUNK_CIM_VERSION }}"'' --form 'splunk_versions='"${{ steps.vars.outputs.SPLUNKBASE_SPLUNK_VERSION }}"'' --form 'visibility=true'
+          curl --location --request POST 'https://splunkbase.splunk.com/api/v1/app/${{ steps.vars.outputs.SPLUNKBASE_ID }}/new_release/' --header 'Authorization: Basic ZGlvZ29mZ206cHVmcFloLWd5cWZ1Ny13dW5oeWQ=' --header 'Cookie: sessionid=${{ steps.login.outputs.SPLUNKBASE_SESSION_ID }}'; csrftoken=sMucg13V1Ul7v7JNlQLPzjr3fFbZFpHQmNwW4wvnFfJXrVXbvKUaG6lzCGPi48tM' --form 'files[]=@/home/runner/work/TA-ibm_secretserver/TA-ibm_secretserver/dist' --form 'filename=TA-ibm_secretserver.tgz' --form 'cim_versions=${{ steps.vars.outputs.SPLUNKBASE_SPLUNK_CIM_VERSION }}' --form 'splunk_versions=${{ steps.vars.outputs.SPLUNKBASE_SPLUNK_VERSION }}' --form 'visibility=true'
 
         
       
