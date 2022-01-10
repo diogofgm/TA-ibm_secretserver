@@ -56,6 +56,7 @@ jobs:
 
       - name: Authenticate to Splunkbase
         id: login
+        shell: bash
         run: |
           curl --location --request POST 'https://splunkbase.splunk.com/api/account:login/' --data-urlencode 'username='"${{ secrets.SPLUNKBASE_USER }}"'' --data-urlencode 'password='"${{ secrets.SPLUNKBASE_PASSWORD }}"'' > login.xml
           ls
