@@ -65,6 +65,7 @@ jobs:
           echo ::set-output name=SPLUNKBASE_SESSION_ID::"$AUTH"
           
       - name: Publish to Splunkbase
+        shell: bash
         run: |
           cd /home/runner/work/TA-ibm_secretserver/TA-ibm_secretserver/dist
           pwd
