@@ -34,6 +34,12 @@ jobs:
       #   uses: splunk/addonfactory-packaging-toolkit-action@v1.1.1
       #   with:
       #     source: /github/workspace/package
+      - name: Load ENV variables
+        run: |
+          source .splunkbase
+          echo $SPLUNKBASE_ID
+          echo $SPLUNKBASE_SPLUNK_VERSION
+          echo $SPLUNKBASE_SPLUNK_CIM_VERSION
 
       - name: Package Splunk App with CLI
         run: |
