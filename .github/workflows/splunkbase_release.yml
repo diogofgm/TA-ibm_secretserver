@@ -1,0 +1,64 @@
+name: Publish to Splunkbase
+# on:
+#  push:
+#    branches:
+#      - "main"
+#    tags:
+#      - "v[0-9]+.[0-9]+.[0-9]+"
+#  pull_request:
+#    branches:
+#      - "main"
+
+jobs:
+
+  # Package App
+  splunkbase-release:
+    name: Splunkbase release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          # semantic-release won't trigger a tagged build if this is not set false
+          persist-credentials: false
+
+      # Our add-on contains Python code, so we need to install Python in the container
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+
+      # - name: Package Splunk App with SLIM
+      #   id: slim
+      #   uses: splunk/addonfactory-packaging-toolkit-action@v1.1.1
+      #   with:
+      #     source: /github/workspace/package
+
+      - name: Package Splunk App with CLI
+        run: |
+          pwd
+          ls -la
+          cd ${GITHUB_WORKSPACE}
+          mv package TA-ibm_secretserver
+          mkdir dist
+          tar -zcvf dist/TA-ibm_secretserver.tar.gz TA-ibm_secretserver
+          cd dist
+          ls -la
+          pwd
+
+      - name: Authenticate to Splunkbase
+        run: |
+          AUTH=$(curl --location --request POST 'https://splunkbase.splunk.com/api/account:login/' --data-urlencode 'username='"${{ secrets.SPLUNKBASE_USER }}"'' --data-urlencode 'password='"${{ secrets.SPLUNKBASE_PASSWORD }}"'')
+          echo "$AUTH" > login.xml
+          if [ "$AUTH" == "Credentials Invalid" ]; then
+            exit 1
+          else
+            exit 0
+          fi
+#      - name: Publish to Splunkbase
+#        run: |
+#          SPLUNKBASE_SESSION_ID=$(awk '/id/{printf $1}' login.xml | cut -d">" -f2 | cut -d"<" -f1)
+#          curl --location --request POST 'https://splunkbase.splunk.com/api/v1/app/'"${SPLUNKBASE_APP_ID}"'/new_release/' --header 'Authorization: Basic ZGlvZ29mZ206cHVmcFloLWd5cWZ1Ny13dW5oeWQ=' --header 'Cookie: sessionid='"$SPLUNKBASE_SESSION_ID"''; csrftoken=sMucg13V1Ul7v7JNlQLPzjr3fFbZFpHQmNwW4wvnFfJXrVXbvKUaG6lzCGPi48tM' --form 'files[]=@/'"${CIRCLE_PROJECT_REPONAME}"'/dist' --form 'filename='"${CIRCLE_PROJECT_REPONAME}"'.tgz' --form 'cim_versions=4.9,4.7' --form 'splunk_versions=8.0' --form 'visibility=true'
+#          exit 1
+        
+      
