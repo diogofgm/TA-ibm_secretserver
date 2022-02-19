@@ -20,28 +20,28 @@ IBM DataPower Add-on for Splunk
    :glob:
    :maxdepth: 0
    :caption: Installation:
-   
+
    installation/*
 
 .. toctree::
    :glob:
    :maxdepth: 0
    :caption: Configuration:
-   
+
    configuration/*
 
 .. toctree::
    :glob:
    :maxdepth: 0
    :caption: Troubleshooting:
-   
+
    troubleshooting/*
 
 .. toctree::
    :glob:
    :maxdepth: 0
    :caption: Support:
-   
+
    support/*
 
 
